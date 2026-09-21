@@ -1,2 +1,567 @@
-# iainsmerznak
-Interactive Resume 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jordan Vance — IT Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10151b;
+    --surface: #171f27;
+    --surface-2: #1e2831;
+    --line: #2a3641;
+    --text: #e7edf2;
+    --muted: #93a3ae;
+    --accent: #c9903f;
+    --accent-soft: #c9903f33;
+    --accent2: #5f9e93;
+    --accent2-soft: #5f9e9333;
+    --radius: 3px;
+  }
+
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      /* page is intentionally dark-mode-only; keep tokens fixed */
+    }
+  }
+
+  *{ box-sizing: border-box; }
+  html{
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  h1,h2,h3{
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .mono{
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--accent-soft); color: var(--text); }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 50;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(16,21,27,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-mark{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .nav-links{
+    display:flex;
+    gap: 1.5rem;
+    list-style:none;
+    margin:0;
+    padding:0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{ display:none; }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--muted);
+    font-size: 0.92rem;
+    white-space:nowrap;
+    padding: 0.3rem 0.1rem;
+    border-bottom: 2px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  section{
+    padding: 5rem 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+    scroll-margin-top: 90px;
+  }
+  section + section{ border-top: 1px solid var(--line); }
+
+  .eyebrow{
+    color: var(--accent2);
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  /* ---------- Hero ---------- */
+  #home{
+    padding-top: 4.5rem;
+    padding-bottom: 4rem;
+    display:grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.5rem;
+    align-items:center;
+    opacity:0;
+    transform: translateY(10px);
+    animation: rise .6s ease forwards;
+  }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  .avatar{
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    flex-shrink:0;
+    background:
+      repeating-linear-gradient(45deg, var(--surface-2) 0 6px, var(--surface) 6px 12px);
+    border: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--muted);
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    text-align:center;
+    position:relative;
+  }
+  .avatar::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  #home h1{
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.15;
+  }
+  .role-line{
+    margin-top: 0.4rem;
+    color: var(--accent);
+    font-family:'JetBrains Mono', monospace;
+    font-size: 1rem;
+  }
+  .hero-blurb{
+    margin-top: 1rem;
+    color: var(--muted);
+    max-width: 56ch;
+  }
+  .hero-actions{
+    margin-top: 1.5rem;
+    display:flex;
+    gap: 0.8rem;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius);
+    text-decoration:none;
+    font-size: 0.92rem;
+    border: 1px solid var(--line);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .btn.primary{
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  .btn:hover{ border-color: var(--accent); }
+
+  @media (max-width: 560px){
+    #home{ grid-template-columns: 1fr; text-align:left; }
+  }
+
+  /* ---------- Objective ---------- */
+  #objective p{
+    color: var(--muted);
+    max-width: 68ch;
+  }
+  #objective p + p{ margin-top: 1rem; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups{
+    margin-top: 1.5rem;
+    display:grid;
+    gap: 1.75rem;
+  }
+  .skill-group h3{
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .skill-group .mono{
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .tag-row{
+    margin-top: 0.7rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.5rem;
+  }
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+  }
+  .tag.emph{
+    border-color: var(--accent2);
+    color: var(--accent2);
+    background: var(--accent2-soft);
+  }
+
+  /* ---------- Education ---------- */
+  .entry{
+    display:grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.2rem;
+    padding: 1.3rem 0;
+  }
+  .entry + .entry{ border-top: 1px solid var(--line); }
+  .entry time{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .entry h3{ font-size: 1.05rem; }
+  .entry .org{ color: var(--accent2); font-size: 0.92rem; margin-top: 0.15rem; }
+  .entry p{ color: var(--muted); margin-top: 0.5rem; font-size: 0.95rem; }
+  .cert-list{
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.5rem;
+  }
+  .cert-list li{
+    font-size: 0.8rem;
+    font-family:'JetBrains Mono', monospace;
+    color: var(--accent);
+    border: 1px solid var(--accent-soft);
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--radius);
+  }
+  @media (max-width: 560px){
+    .entry{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Experience ---------- */
+  .job{
+    padding: 1.4rem 0;
+  }
+  .job + .job{ border-top: 1px solid var(--line); }
+  .job-head{
+    display:flex;
+    justify-content:space-between;
+    gap: 1rem;
+    flex-wrap:wrap;
+    align-items:baseline;
+  }
+  .job-head h3{ font-size: 1.05rem; }
+  .job-meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .job ul{
+    margin: 0.7rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+  }
+  .job li{ margin: 0.3rem 0; }
+  .job li::marker{ color: var(--accent2); }
+
+  /* ---------- Contact ---------- */
+  #contact{ padding-bottom: 6rem; }
+  .contact-grid{
+    margin-top: 1.5rem;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.9rem;
+  }
+  .contact-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap: 0.3rem;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .contact-card:hover{
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .contact-card .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent2);
+  }
+  .contact-card .value{ font-size: 0.95rem; }
+
+  footer{
+    text-align:center;
+    padding: 2rem 1.5rem 3rem;
+    color: var(--muted);
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-mark">jordan.vance <span style="color:var(--muted)">--resume</span></span>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">home</a></li>
+    <li><a href="#objective">objective</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#education">education</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+  <div class="avatar">professional<br>photo<br>placeholder</div>
+  <div>
+    <h1>Jordan Vance</h1>
+    <div class="role-line">Systems &amp; Network Administrator</div>
+    <p class="hero-blurb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder line describing your general focus area — infrastructure, support, security, or development — swap this for one sharp sentence about what you actually do.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#contact">Get in touch</a>
+      <a class="btn" href="#experience">See experience</a>
+    </div>
+  </div>
+</section>
+
+<section id="objective">
+  <div class="eyebrow">01 · objective</div>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">Career objective</h2>
+  <p>Placeholder goal statement — lorem ipsum dolor sit amet, consectetur adipiscing elit, seeking a role where quisque volutpat and mattis eget convallis can be applied toward scalable infrastructure and reliable systems.</p>
+  <p>Second sentence, gibberish filler: nunc vulputate libero et velit interdum, ac aliquet odio mattis, aiming to grow into [target role] within two to three years while contributing to [type of team or mission].</p>
+</section>
+
+<section id="skills">
+  <div class="eyebrow">02 · skills</div>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">IT skills &amp; expertise</h2>
+
+  <div class="skill-groups">
+    <div class="skill-group">
+      <h3>Systems &amp; Infrastructure</h3>
+      <div class="mono">// replace with your own stack</div>
+      <div class="tag-row">
+        <span class="tag emph">Windows Server</span>
+        <span class="tag">Linux (Ubuntu/RHEL)</span>
+        <span class="tag">Active Directory</span>
+        <span class="tag">VMware / Hyper-V</span>
+        <span class="tag">Bash scripting</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Networking &amp; Security</h3>
+      <div class="mono">// replace with your own stack</div>
+      <div class="tag-row">
+        <span class="tag emph">TCP/IP</span>
+        <span class="tag">Cisco IOS</span>
+        <span class="tag">Firewall config</span>
+        <span class="tag">VPN administration</span>
+        <span class="tag">Wireshark</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Development &amp; Tools</h3>
+      <div class="mono">// replace with your own stack</div>
+      <div class="tag-row">
+        <span class="tag emph">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Git / GitHub</span>
+        <span class="tag">JIRA</span>
+        <span class="tag">Power BI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="eyebrow">03 · education</div>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">Education &amp; certifications</h2>
+
+  <div class="entry">
+    <time>2022 — 2026</time>
+    <div>
+      <h3>Bachelor of Science, Placeholder Institution</h3>
+      <div class="org">Major: Information Technology · GPA: 0.00</div>
+      <p>Lorem ipsum coursework summary — relevant classes, honors, or a capstone project go here. Swap in your actual program and highlights.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <time>2020 — 2022</time>
+    <div>
+      <h3>Associate Degree, Placeholder Community College</h3>
+      <div class="org">Major: Computer Science</div>
+      <p>Filler description of coursework or achievements during this program.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <time>certs</time>
+    <div>
+      <h3>Certifications</h3>
+      <ul class="cert-list">
+        <li>CompTIA A+</li>
+        <li>CompTIA Network+</li>
+        <li>CompTIA Security+</li>
+        <li>AWS Cloud Practitioner</li>
+        <li>Cisco CCNA</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="eyebrow">04 · experience</div>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">Employment experience</h2>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>IT Support Technician — Placeholder Company</h3>
+      <div class="job-meta">Jun 2024 — Present · City, ST</div>
+    </div>
+    <ul>
+      <li>Lorem ipsum resolved an average of [number] tickets per week across hardware, software, and network issues.</li>
+      <li>Filler bullet: deployed and configured [tool/system] for a team of [number] employees.</li>
+      <li>Placeholder achievement — reduced [metric] by [percentage] through [initiative].</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Help Desk Intern — Another Placeholder Co.</h3>
+      <div class="job-meta">Jan 2023 — May 2024 · City, ST</div>
+    </div>
+    <ul>
+      <li>Gibberish bullet: assisted with quisque volutpat mattis eget convallis across desktop and mobile fleets.</li>
+      <li>Documented standard operating procedures for [process], cutting onboarding time by [amount].</li>
+      <li>Supported migration of [legacy system] to [new system] with zero reported downtime.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Student Technology Assistant — Your School</h3>
+      <div class="job-meta">Aug 2022 — Dec 2022 · City, ST</div>
+    </div>
+    <ul>
+      <li>Placeholder line about classroom AV support, inventory management, or lab maintenance.</li>
+      <li>Trained [number] student staff on [tool or process].</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">05 · contact</div>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">Get in touch</h2>
+
+  <div class="contact-grid">
+    <a class="contact-card" href="mailto:jordan.vance@example.com">
+      <span class="label">email</span>
+      <span class="value">jordan.vance@example.com</span>
+    </a>
+    <a class="contact-card" href="tel:+10000000000">
+      <span class="label">phone</span>
+      <span class="value">(000) 000-0000</span>
+    </a>
+    <a class="contact-card" href="#" target="_blank" rel="noopener">
+      <span class="label">linkedin</span>
+      <span class="value">linkedin.com/in/placeholder</span>
+    </a>
+    <a class="contact-card" href="#" target="_blank" rel="noopener">
+      <span class="label">github</span>
+      <span class="value">github.com/placeholder</span>
+    </a>
+    <a class="contact-card" href="#">
+      <span class="label">location</span>
+      <span class="value">City, State</span>
+    </a>
+    <a class="contact-card" href="#">
+      <span class="label">portfolio</span>
+      <span class="value">yourdomain.example</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  built with placeholder content — replace freely
+</footer>
+
+<script>
+  // Highlight the active nav link based on scroll position
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#navLinks a');
+
+  const setActive = (id) => {
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+    });
+  };
+
+  try {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s));
+  } catch (e) {
+    // IntersectionObserver unsupported — nav still works via normal anchor links
+  }
+</script>
+
+</body>
+</html>
