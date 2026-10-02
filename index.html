@@ -252,7 +252,21 @@
   #objective p + p{ margin-top: 1rem; }
 
   /* ---------- Skills ---------- */
-  .skill-groups{
+  .skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;        /* space between groups, lower = tighter */
+  }
+
+  .skill-group {
+  margin: 0;
+  padding: 0;
+  }
+
+  .skill-group h3 {
+  margin: 0 0 0.4rem;  /* kills the default top margin */
+  }
+  /*.skill-groups{
     margin-top: 1.5rem;
     display:grid;
     gap: 1.75rem;
@@ -260,7 +274,7 @@
   .skill-group h3{
     font-size: 1rem;
     color: var(--text);
-  }
+  }*/
   .skill-group .mono{
     color: var(--muted);
     font-size: 0.78rem;
@@ -438,18 +452,18 @@
 
     <div class="skill-group">
       <h3>AudioVisual Equipment - Projectors and mics</h3>
-      <div class="tag-row">
-      </div>
     </div>
 
     <div class="skill-group">
       <h3>Microsoft Office</h3>
-      <div class="tag-row">
     </div>
-  </div>
 
-  <div class="skill-group">
+    <div class="skill-group">
       <h3>Spanish Language</h3>
+    </div>
+
+    <div class="skill-group">
+      <h3>Version Control with Git</h3>
     </div>
   </div>
 </section>
@@ -508,7 +522,6 @@
     </div>
     <ul>
       <li>Assisted with sorting, repackaging, and distributing food donations to residents for a total of 100 hours.</li>
-      <li>Supported migration of [legacy system] to [new system] with zero reported downtime.</li>
     </ul>
   </div>
 </section>
