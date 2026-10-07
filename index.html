@@ -64,10 +64,11 @@
     top: env(safe-area-inset-top, 0px);
     z-index: 50;
     display:flex;
-    align-items:center;
+    align-items:stretch;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1rem 1.5rem;
+    padding: 0 1.5rem;
+    min-height: 58px;
     background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
@@ -77,10 +78,13 @@
     font-size: 0.9rem;
     color: var(--accent);
     white-space: nowrap;
+    display:flex;
+    align-items:center;
   }
   .nav-links{
     display:flex;
-    gap: 1.5rem;
+    align-items:stretch;
+    gap: 0;
     list-style:none;
     margin:0;
     padding:0;
@@ -88,19 +92,28 @@
     scrollbar-width:none;
   }
   .nav-links::-webkit-scrollbar{ display:none; }
+  .nav-links li{ display:flex; }
   .nav-links a{
+    display:flex;
+    align-items:center;
     text-decoration:none;
     color: var(--muted);
     font-size: 0.92rem;
     white-space:nowrap;
-    padding: 0.3rem 0.1rem;
+    padding: 0 0.9rem;
     border-bottom: 2px solid transparent;
-    transition: color .15s ease, border-color .15s ease;
+    transition: color .15s ease, background-color .15s ease, border-color .15s ease;
   }
-  .nav-links a:hover, .nav-links a.active{
+  .nav-links a.active{
     color: var(--text);
     border-color: var(--accent);
   }
+  .nav-links a:hover, .nav-links a:focus-visible{
+    background: #4f716a;
+    border-color: #4f716a;
+    color: #fff;
+  }
+  .nav-links a:focus-visible{ outline-offset: -3px; outline-color: #fff; }
 
   /* ---------- Section boxes ---------- */
   section{
@@ -504,7 +517,7 @@
 
   <div class="job">
     <div class="job-head">
-      <h3>Bread of the Mighty Food Bank, Gainesville FL</h3>
+      <h3>Bread of the Mighty Food Bank, Gainesvile FL</h3>
       <div class="job-meta">April - June 2022</div>
     </div>
     <ul>
@@ -515,7 +528,7 @@
 
 <section id="projects">
   <div class="eyebrow">05 · projects</div>
-  <h2 style="margin-top:0.6rem; font-size:1.5rem;">App Development Projects</h2>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">App Development Pojects</h2>
 
   <div class="job">
     <div class="job-head">
