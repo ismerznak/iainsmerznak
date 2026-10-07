@@ -9,23 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #10151b;
-    --surface: #171f27;
-    --surface-2: #1e2831;
-    --line: #2a3641;
-    --text: #e7edf2;
-    --muted: #93a3ae;
-    --accent: #c9903f;
-    --accent-soft: #c9903f33;
-    --accent2: #5f9e93;
-    --accent2-soft: #5f9e9333;
-    --radius: 3px;
-  }
-
-  @media (prefers-color-scheme: light){
-    :root:not([data-theme="dark"]){
-      /* page is intentionally dark-mode-only; keep tokens fixed */
-    }
+    --bg: #f3f3f0;          /* off-white page */
+    --card: #ffffff;        /* bright white boxes */
+    --surface: #f7f7f4;     /* soft fill inside boxes (tags, cards) */
+    --line: #dcdcd5;
+    --text: #2a3037;
+    --muted: #5f6872;
+    --accent: #3f6078;      /* dusty slate blue */
+    --accent-soft: #3f607822;
+    --accent2: #5a7d76;     /* muted sage */
+    --accent2-soft: #5a7d7620;
+    --radius: 4px;
   }
 
   *{ box-sizing: border-box; }
@@ -55,12 +49,8 @@
     letter-spacing: -0.01em;
   }
 
-  .mono{
-    font-family: 'JetBrains Mono', monospace;
-  }
-
+  .mono{ font-family: 'JetBrains Mono', monospace; }
   a{ color: inherit; }
-
   ::selection{ background: var(--accent-soft); color: var(--text); }
 
   a:focus-visible, button:focus-visible{
@@ -78,7 +68,7 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    background: rgba(16,21,27,0.86);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
   }
@@ -112,13 +102,19 @@
     border-color: var(--accent);
   }
 
+  /* ---------- Section boxes ---------- */
   section{
-    padding: 5rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 2.5rem 2.25rem;
+    width: calc(100% - 2rem);
     max-width: 860px;
-    margin: 0 auto;
+    margin: 1.5rem auto;
     scroll-margin-top: 90px;
   }
-  section + section{ border-top: 1px solid var(--line); }
+  #home{ margin-top: 2rem; }
+  #contact{ margin-bottom: 2rem; }
 
   .eyebrow{
     color: var(--accent2);
@@ -128,8 +124,6 @@
 
   /* ---------- Hero ---------- */
   #home{
-    padding-top: 4.5rem;
-    padding-bottom: 4rem;
     display:grid;
     grid-template-columns: auto 1fr;
     gap: 2.5rem;
@@ -140,68 +134,33 @@
   }
   @keyframes rise{ to{ opacity:1; transform:none; } }
 
-  /*.avatar{
+  .avatar {
     width: 132px;
     height: 132px;
     border-radius: 50%;
-    flex-shrink:0;
-    background:
-      repeating-linear-gradient(45deg, var(--surface-2) 0 6px, var(--surface) 6px 12px);
+    flex-shrink: 0;
+    background: var(--surface);
     border: 1px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color: var(--muted);
-    font-family:'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    text-align:center;
-    position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar img{
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateY(8px);
   }
   .avatar::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:50%;
-    box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,0.35);
-  }*/
-
-  .avatar {
-  width: 132px;
-  height: 132px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background:
-    repeating-linear-gradient(
-      45deg,
-      var(--surface-2) 0 6px,
-      var(--surface) 6px 12px
-    );
-  border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.avatar img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transform: translateY(8px);
-}
-
-.avatar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px var(--line),
-    0 8px 24px rgba(0, 0, 0, 0.35);
-  pointer-events: none;
-}
-
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--line), 0 6px 16px rgba(30, 40, 50, 0.10);
+    pointer-events: none;
+  }
 
   #home h1{
     font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -231,16 +190,20 @@
     text-decoration:none;
     font-size: 0.92rem;
     border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--text);
     transition: border-color .15s ease, background .15s ease;
   }
   .btn.primary{
-    background: var(--accent-soft);
+    background: var(--accent);
     border-color: var(--accent);
-    color: var(--text);
+    color: #fff;
   }
+  .btn.primary:hover{ background: #34506a; }
   .btn:hover{ border-color: var(--accent); }
 
   @media (max-width: 560px){
+    section{ padding: 1.75rem 1.25rem; }
     #home{ grid-template-columns: 1fr; text-align:left; }
   }
 
@@ -255,27 +218,13 @@
   .skill-groups {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;        /* space between groups, lower = tighter */
+    gap: 0.75rem;
   }
-
-  .skill-group {
-    margin: 0;
-    padding: 0;
-  }
-
+  .skill-group{ margin: 0; padding: 0; }
   .skill-group h3 {
-    margin: 0 0 0.4rem;  /* kills the default top margin */
+    margin: 0 0 0.4rem;
     font-size: 1.05rem;
   }
-  /*.skill-groups{
-    margin-top: 1.5rem;
-    display:grid;
-    gap: 1.75rem;
-  }
-  .skill-group h3{
-    font-size: 1rem;
-    color: var(--text);
-  }*/
   .skill-group .mono{
     color: var(--muted);
     font-size: 0.78rem;
@@ -297,7 +246,7 @@
   }
   .tag.emph{
     border-color: var(--accent2);
-    color: var(--accent2);
+    color: #44665f;
     background: var(--accent2-soft);
   }
 
@@ -337,10 +286,8 @@
     .entry{ grid-template-columns: 1fr; }
   }
 
-  /* ---------- Experience ---------- */
-  .job{
-    padding: 1.4rem 0;
-  }
+  /* ---------- Experience / Projects ---------- */
+  .job{ padding: 1.4rem 0; }
   .job + .job{ border-top: 1px solid var(--line); }
   .job-head{
     display:flex;
@@ -350,6 +297,7 @@
     align-items:baseline;
   }
   .job-head h3{ font-size: 1.05rem; }
+  .job-head h4{ color: var(--text); font-weight: 500; }
   .job-meta{
     font-family:'JetBrains Mono', monospace;
     font-size: 0.78rem;
@@ -362,13 +310,36 @@
   }
   .job li{ margin: 0.3rem 0; }
   .job li::marker{ color: var(--accent2); }
-  
-  .job p{ 
-    margin: 0.3rem 0; 
-    color: var(--accent2); }
+
+  .job p{
+    margin: 0.3rem 0;
+    color: var(--muted);
+  }
+  .job h3 a{
+    color: var(--accent);
+    text-decoration-color: var(--accent-soft);
+    text-underline-offset: 3px;
+  }
+  .job h3 a:hover{ text-decoration-color: var(--accent); }
+
+  /* project screenshots */
+  .shot{
+    margin: 1rem 0 0;
+  }
+  .shot img{
+    display:block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    padding: 6px;
+  }
+  .shot.phone img{ width: 210px; }
+  .shot.wide img{ width: 100%; max-width: 560px; }
 
   /* ---------- Contact ---------- */
-  #contact{ padding-bottom: 6rem; }
+  #contact{ padding-bottom: 2.5rem; }
   .contact-grid{
     margin-top: 1.5rem;
     display:grid;
@@ -399,7 +370,7 @@
 
   footer{
     text-align:center;
-    padding: 2rem 1.5rem 3rem;
+    padding: 1rem 1.5rem 3rem;
     color: var(--muted);
     font-family:'JetBrains Mono', monospace;
     font-size: 0.75rem;
@@ -439,41 +410,6 @@
   <h2 style="margin-top:0.6rem; font-size:1.5rem;">Career objective</h2>
   <p>Information Technology student at Florida State University seeking an entry-level IT position where I can apply my programming, technical troubleshooting, and customer service skills to provide effective technical support. Eager to develop hands-on IT experience while contributing to a team and supporting users in a professional environment.</p>
 </section>
-
-<!--
-<section id="skills">
-  <div class="eyebrow">02 · skills</div>
-  <h2 style="margin-top:0.6rem; font-size:1.5rem;">Technical Skills</h2>
-
-  <div class="skill-groups">
-    <div class="skill-group">
-      <h3>Languages</h3>
-      <div class="tag-row">
-        <span class="tag emph">Java (AP Computer Science A)</span>
-        <span class="tag">C++</span>
-        <span class="tag">Python</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">HTML</span>
-      </div>
-    </div>
-
-    <div class="skill-group">
-      <h3>AudioVisual Equipment - Projectors and mics</h3>
-    </div>
-
-    <div class="skill-group">
-      <h3>Microsoft Office</h3>
-    </div>
-
-    <div class="skill-group">
-      <h3>Spanish Language</h3>
-    </div>
-
-    <div class="skill-group">
-      <h3>Version Control with Git</h3>
-    </div>
-  </div>
-</section> -->
 
 <section id="skills">
   <div class="eyebrow">02 · skills</div>
@@ -545,8 +481,8 @@
         <li>Cisco CCNA</li>
       </ul>
     </div>
-  </div>
-</section> -->
+  </div> -->
+</section>
 
 <section id="experience">
   <div class="eyebrow">04 · experience</div>
@@ -568,7 +504,7 @@
 
   <div class="job">
     <div class="job-head">
-      <h3>Bread of the Mighty Food Bank, Gainesvile FL</h3>
+      <h3>Bread of the Mighty Food Bank, Gainesville FL</h3>
       <div class="job-meta">April - June 2022</div>
     </div>
     <ul>
@@ -579,13 +515,16 @@
 
 <section id="projects">
   <div class="eyebrow">05 · projects</div>
-  <h2 style="margin-top:0.6rem; font-size:1.5rem;">App Development Pojects</h2>
+  <h2 style="margin-top:0.6rem; font-size:1.5rem;">App Development Projects</h2>
 
   <div class="job">
     <div class="job-head">
       <h3 style="margin-bottom: 0; margin-top: 0;"><a href="https://bitbucket.org/ias-23/lis4368/src/master/" target="_blank" rel="noopener">Web Based App Development</a></h3>
     </div>
       <p>Used Tomcat and JDK through local port to host web based application for LIS4368. Added data using MySQL and MySQL Workbench.</p>
+      <figure class="shot wide">
+        <img src="modify.jpg" alt="Web app 'Update Customer' form from Project 2, showing insert, delete, and update functionality backed by a MySQL customer table">
+      </figure>
   </div>
 
   <div class="job">
@@ -593,6 +532,9 @@
       <h3 style="margin-bottom: 0; margin-top: 0;"><a href="https://bitbucket.org/ias-23/lis4381/src/main/" target="_blank" rel="noopener">Mobile App Development</a></h3>
     </div>
       <p>Used Android Studio to create Java/Kotlin based mobile apps. This is a current class project.</p>
+      <figure class="shot phone">
+        <img src="Vertical1.jpg" alt="Android app screenshot of a 'Ticket Value' calculator screen running in an emulator">
+      </figure>
   </div>
 </section>
 
