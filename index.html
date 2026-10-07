@@ -135,6 +135,20 @@
     font-size: 0.82rem;
   }
 
+  /* ---------- Scroll reveal (sections 1-6) ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .35s ease-out, transform .35s ease-out;
+  }
+  .reveal.in{
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity: 1; transform: none; transition: none; }
+  }
+
   /* ---------- Hero ---------- */
   #home{
     display:grid;
@@ -604,6 +618,34 @@
     sections.forEach(s => observer.observe(s));
   } catch (e) {
     // IntersectionObserver unsupported — nav still works via normal anchor links
+  }
+
+  // Fade sections 1-6 in as they scroll into view (hero has its own load animation)
+  try {
+    const revealTargets = document.querySelectorAll('section[id]:not(#home)');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+    revealTargets.forEach(el => {
+      el.classList.add('reveal');
+      revealObserver.observe(el);
+    });
+
+    // Nav click: show the destination right away so long jumps never land on a blank section
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.classList.add('in');
+      });
+    });
+  } catch (e) {
+    // If anything fails, sections simply stay visible (no .reveal class applied)
   }
 </script>
 
